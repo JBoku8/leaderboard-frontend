@@ -17,8 +17,8 @@ function ProfileList(props: any) {
 
   return (
     <div className="row justify-content-center pt-4 w-75 m-auto">
-      {todoList.map((todo) => {
-        return <Profile key={todo.id} />;
+      {todoList.map((todo, index) => {
+        return <Profile key={todo.id} todo={todo} order={index + 1} />;
       })}
     </div>
   );
