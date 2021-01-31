@@ -1,4 +1,5 @@
 import Search from "./components/Search/Search";
+import ProfileList from "./components/Profile/ProfileList";
 import "./App.css";
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <div className="container">
       <br />
       <Search />
+      <ProfileList />
     </div>
   );
 }
