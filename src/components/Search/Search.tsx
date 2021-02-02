@@ -2,9 +2,9 @@ import Button from "../../ui/Button";
 import Input from "../../ui/Input";
 import Card from "../Card/Card";
 
-interface Props {}
+import { Props as InputProps } from "../../ui/Input";
 
-function Search(props: Props) {
+function Search(props: InputProps) {
   return (
     <div className="row justify-content-center">
       <div className="col-12">
@@ -17,7 +17,7 @@ function Search(props: Props) {
               <i className="fas fa-search h4 text-body"></i>
             </div>
             <div className="col">
-              <Input />
+              <Input handleChange={props.handleChange} value={props.value} />
             </div>
             <div className="col-auto">
               <Button />

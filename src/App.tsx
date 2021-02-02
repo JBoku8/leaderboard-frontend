@@ -1,30 +1,21 @@
+import { useState, useCallback } from "react";
 import Search from "./components/Search/Search";
-import ProfileList from "./components/Profile/ProfileList";
-import { useLeaderboardListQuery } from "./generated/graphql";
+import LeaderBoard from "./pages/LeaderBoard";
 
 import "./App.css";
 
 function App() {
-  const { data, error, loading } = useLeaderboardListQuery({
-    variables: {
-      url: "https://github.com/stoplightio/prism",
-    },
-    pollInterval: 30 * 1000,
-  });
+  const [url, setUrl] = useState("https://github.com/stoplightio/prism");
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error || !data) {
-    return <div>ERROR</div>;
-  }
+  const handleUrlChange = useCallback((value) => {
+    setUrl(value);
+  }, []);
 
   return (
     <div className="container">
       <br />
-      <Search />
-      <ProfileList data={data} />
+      <Search handleChange={handleUrlChange} value={url} />
+      <LeaderBoard url={url} />
     </div>
   );
 }
