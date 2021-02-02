@@ -12,8 +12,6 @@ const client = new ApolloClient<InMemoryCache>({
   uri: "https://github-leaderboard-backend.herokuapp.com/graphql",
 });
 
-console.log(process.env.REACT_APP_API_BASE_URL);
-
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>

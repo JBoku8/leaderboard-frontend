@@ -9,6 +9,7 @@ function App() {
     variables: {
       url: "https://github.com/stoplightio/prism",
     },
+    pollInterval: 30 * 1000,
   });
 
   if (loading) {
