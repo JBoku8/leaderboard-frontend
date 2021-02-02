@@ -1,2 +1,0 @@
-# leaderboard-frontend
-leaderboard-frontend
