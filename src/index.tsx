@@ -1,13 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloProvider as ApolloHooksProvider } from "@apollo/react-hooks";
 
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+const client = new ApolloClient<InMemoryCache>({
+  cache: new InMemoryCache() as any,
+  uri: "https://github-leaderboard-backend.herokuapp.com/graphql",
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <ApolloHooksProvider client={client}>
+        <App />
+      </ApolloHooksProvider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
