@@ -1,33 +1,28 @@
-import { useEffect, useState } from "react";
 import Profile from "./Profile";
 
-import { LeaderboardListQuery } from "../../generated/graphql";
-
-// service import
-import Api from "../../services/api";
-import Todo from "../../interfaces/Todo.interface";
+import { Hacker, LeaderboardListQuery } from "../../generated/graphql";
 
 interface Props {
   data: LeaderboardListQuery;
 }
 
 function ProfileList(props: Props) {
-  const [todoList, setTodoList] = useState<Array<Todo>>([]);
-  useEffect(() => {
-    (async () => {
-      const result = await Api.getTodos();
-      setTodoList(result);
-    })();
-  }, []);
+  const {
+    data: { leaderboard },
+  } = props;
 
-  useEffect(() => {
-    console.log(props.data);
-  }, [props.data]);
+  // const list: Hacker;
 
   return (
     <div className="row justify-content-center pt-4 w-75 m-auto">
-      {todoList.map((todo, index) => {
-        return <Profile key={todo.id} todo={todo} order={index + 1} />;
+      {leaderboard?.map((leader, index) => {
+        return (
+          <Profile
+            key={leader?.profile}
+            hacker={leader as Hacker}
+            order={index + 1}
+          />
+        );
       })}
     </div>
   );

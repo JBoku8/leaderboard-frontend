@@ -1,9 +1,13 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -14,60 +18,67 @@ export type Scalars = {
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   leaderboard?: Maybe<Array<Maybe<Hacker>>>;
 };
 
-
 export type QueryLeaderboardArgs = {
-  url?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars["String"]>;
 };
 
 export type Hacker = {
-  __typename?: 'Hacker';
-  total?: Maybe<Scalars['Int']>;
-  profile?: Maybe<Scalars['String']>;
+  __typename?: "Hacker";
+  total?: Maybe<Scalars["Int"]>;
+  profile?: Maybe<Scalars["String"]>;
   commitments?: Maybe<Commitment>;
+  avatar?: Maybe<Scalars["String"]>;
 };
 
 export type Commitment = {
-  __typename?: 'Commitment';
-  additions?: Maybe<Scalars['Int']>;
-  deletions?: Maybe<Scalars['Int']>;
-  point?: Maybe<Scalars['Int']>;
+  __typename?: "Commitment";
+  additions?: Maybe<Scalars["Int"]>;
+  deletions?: Maybe<Scalars["Int"]>;
+  point?: Maybe<Scalars["Int"]>;
 };
 
 export type LeaderboardListQueryVariables = Exact<{
-  url: Scalars['String'];
+  url: Scalars["String"];
 }>;
 
-
-export type LeaderboardListQuery = (
-  { __typename?: 'Query' }
-  & { leaderboard?: Maybe<Array<Maybe<(
-    { __typename?: 'Hacker' }
-    & Pick<Hacker, 'total' | 'profile'>
-    & { commitments?: Maybe<(
-      { __typename?: 'Commitment' }
-      & Pick<Commitment, 'additions' | 'deletions' | 'point'>
-    )> }
-  )>>> }
-);
-
+export type LeaderboardListQuery = { __typename?: "Query" } & {
+  leaderboard?: Maybe<
+    Array<
+      Maybe<
+        { __typename?: "Hacker" } & Pick<
+          Hacker,
+          "total" | "profile" | "avatar"
+        > & {
+            commitments?: Maybe<
+              { __typename?: "Commitment" } & Pick<
+                Commitment,
+                "additions" | "deletions" | "point"
+              >
+            >;
+          }
+      >
+    >
+  >;
+};
 
 export const LeaderboardListDocument = gql`
-    query leaderboardList($url: String!) {
-  leaderboard(url: $url) {
-    total
-    profile
-    commitments {
-      additions
-      deletions
-      point
+  query leaderboardList($url: String!) {
+    leaderboard(url: $url) {
+      total
+      profile
+      avatar
+      commitments {
+        additions
+        deletions
+        point
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useLeaderboardListQuery__
@@ -85,12 +96,35 @@ export const LeaderboardListDocument = gql`
  *   },
  * });
  */
-export function useLeaderboardListQuery(baseOptions: Apollo.QueryHookOptions<LeaderboardListQuery, LeaderboardListQueryVariables>) {
-        return Apollo.useQuery<LeaderboardListQuery, LeaderboardListQueryVariables>(LeaderboardListDocument, baseOptions);
-      }
-export function useLeaderboardListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LeaderboardListQuery, LeaderboardListQueryVariables>) {
-          return Apollo.useLazyQuery<LeaderboardListQuery, LeaderboardListQueryVariables>(LeaderboardListDocument, baseOptions);
-        }
-export type LeaderboardListQueryHookResult = ReturnType<typeof useLeaderboardListQuery>;
-export type LeaderboardListLazyQueryHookResult = ReturnType<typeof useLeaderboardListLazyQuery>;
-export type LeaderboardListQueryResult = Apollo.QueryResult<LeaderboardListQuery, LeaderboardListQueryVariables>;
+export function useLeaderboardListQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    LeaderboardListQuery,
+    LeaderboardListQueryVariables
+  >
+) {
+  return Apollo.useQuery<LeaderboardListQuery, LeaderboardListQueryVariables>(
+    LeaderboardListDocument,
+    baseOptions
+  );
+}
+export function useLeaderboardListLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    LeaderboardListQuery,
+    LeaderboardListQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    LeaderboardListQuery,
+    LeaderboardListQueryVariables
+  >(LeaderboardListDocument, baseOptions);
+}
+export type LeaderboardListQueryHookResult = ReturnType<
+  typeof useLeaderboardListQuery
+>;
+export type LeaderboardListLazyQueryHookResult = ReturnType<
+  typeof useLeaderboardListLazyQuery
+>;
+export type LeaderboardListQueryResult = Apollo.QueryResult<
+  LeaderboardListQuery,
+  LeaderboardListQueryVariables
+>;

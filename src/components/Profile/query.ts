@@ -5,6 +5,7 @@ export const QUERY_LEADERBOARD_LIST = gql`
     leaderboard(url: $url) {
       total
       profile
+      avatar
       commitments {
         additions
         deletions
